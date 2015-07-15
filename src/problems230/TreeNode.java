@@ -1,4 +1,4 @@
-package problem230;
+package problems230;
 
 public class TreeNode {
 	int val;
