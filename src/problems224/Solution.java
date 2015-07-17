@@ -1,25 +1,20 @@
 package problems224;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigInteger;
 
 public class Solution {
 	
 	public int calculate(String s){
 	
-		int result = calcAll("(" + s + ")");
+		String result = calcAll("(" + s + ")");
 		
-		return result;
+		return Integer.parseInt(result);
 	}
 	
-    public int calcAll(String s) {
-    	
-    	if(s == ""){
-    		return 0;
-    	}
+    public String calcAll(String s) {
     	
     	if(s.length() <= 0){
-    		return 0;
+    		return "0";
     	}
     	
     	char input[] = s.toCharArray();
@@ -74,10 +69,10 @@ public class Solution {
 									
 					break;
 				case '(':
-					String tmp = s.substring(i,getClouIndex(s.substring(i)+1));
+					String tmp = s.substring(i,getClouIndex(s.substring(i)) + 1 + i);
 					result += calcAll(tmp);
 					result = calcOne(result);
-					i += tmp.length();
+					i += tmp.length() - 1;
 					hasOperator = false;
 					break;
 				case ')':
@@ -94,10 +89,7 @@ public class Solution {
     	result = calcOne(result);
     	
     	
-    	int resultNum = Integer.parseInt(result);
-    	
-    	
-    	return resultNum;
+    	return result;
     }
     
     private int getClouIndex(String s) {
@@ -109,11 +101,10 @@ public class Solution {
     	for(int i = 0 ; i < input.length ; i ++){
     		
     		if(input[i] == ')'){
+    			leftTime -- ;
     			if(leftTime == 0){
     				result = i;
     				break;
-    			}else{
-    				leftTime -- ;
     			}
     		}
     		if(input[i] == '('){
@@ -138,7 +129,7 @@ public class Solution {
     	
     	String operator2 = "";
     	
-    	int result = 0;
+    	BigInteger result = new BigInteger("0");
     	
     	char input[] = s.toCharArray();
     	
@@ -173,20 +164,20 @@ public class Solution {
     	switch (operator) {
 		case "+":
 			if(operator2 == ""){
-				result = Integer.parseInt(left) + Integer.parseInt(right);
+				result = new BigInteger(left).add(new BigInteger(right));
 			}else if (operator2 == "-"){
 				// + -1
-				result = Integer.parseInt(left) - Integer.parseInt(right);
+				result = new BigInteger(left).subtract(new BigInteger(right)); 
 			}
 			
 			break;
 			
 		case "-":
 			if(operator2 == ""){
-				result = Integer.parseInt(left) - Integer.parseInt(right);
+				result = new BigInteger(left).subtract(new BigInteger(right)); 
 			}else{
 				//- -1
-				result = Integer.parseInt(left) + Integer.parseInt(right);
+				result =  new BigInteger(left).add(new BigInteger(right));
 			}
 			break;
 					
