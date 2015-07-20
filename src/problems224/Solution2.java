@@ -1,23 +1,34 @@
 package problems224;
 
-public class Solution {
-	
-	char totalInput[];
+import java.math.BigInteger;
+
+public class Solution2 {
 	
 	public int calculate(String s){
 	
+		String result = calcAll("(" + s + ")");
+		
+		return Integer.parseInt(result);
+	}
+	
+    public String calcAll(String s) {
+    	
     	if(s.length() <= 0){
-    		return 0;
+    		return "0";
     	}
     	
-    	totalInput = s.toCharArray();
+    	char input[] = s.toCharArray();
     	
     	String result = "";
     	boolean hasOperator = false;
     	
     	
-    	for(int i = 0 ; i < totalInput.length ; i ++){
-    		char now = totalInput[i];
+    	for(int i = 0 ; i < input.length ; i ++){
+    		char now = input[i];
+    		
+    		if(i == 0){
+    			continue;
+    		}
     		
     		if(now == ' '){
     			continue;
@@ -57,14 +68,15 @@ public class Solution {
 					}
 									
 					break;
-					
 				case '(':
-					if(i >= 1 && totalInput[i-1] == '-'){
-						doReverse(i);
-					}
-					
+					String tmp = s.substring(i,getClouIndex(s.substring(i)) + 1 + i);
+					result += calcAll(tmp);
+					result = calcOne(result);
+					i += tmp.length() - 1;
+					hasOperator = false;
 					break;
 				case ')':
+					i = input.length;
 					break;
 				default:
 					break;
@@ -77,42 +89,33 @@ public class Solution {
     	result = calcOne(result);
     	
     	
-    	return Integer.parseInt(result);
+    	return result;
     }
-	
-	public void doReverse(int i){
-		
-		//未完结前括号数目
-		int preNum = 0 ;
-		
-		for(; i < totalInput.length ; i ++){
-			
-			if(totalInput[i] == '('){
-				
-				preNum ++;
-				
-			}else if (totalInput[i] == ')'){
-				
-				preNum -- ;
-				if(preNum == 0){
-					break;
-				}
-				
-			}else if(totalInput[i] == '-' || totalInput[i] == '+'){
-				
-				if(preNum == 1){
-					if(totalInput[i] == '-' ){
-						totalInput[i] = '+';
-					}else{
-						totalInput[i] = '-';
-					}
-				}
-				
-			}
-		}
-		
-	}
     
+    private int getClouIndex(String s) {
+    	int result = 0;
+    	int leftTime = 0 ;
+    	
+    	char[] input = s.toCharArray();
+    	
+    	for(int i = 0 ; i < input.length ; i ++){
+    		
+    		if(input[i] == ')'){
+    			leftTime -- ;
+    			if(leftTime == 0){
+    				result = i;
+    				break;
+    			}
+    		}
+    		if(input[i] == '('){
+    			leftTime++;
+    		}
+    		
+    	}
+    	
+		return result;
+	}
+
 	String calcOne(String s){
     	
     	if(s == ""){
@@ -122,13 +125,11 @@ public class Solution {
     	String left ="";
     	String right ="";
     	boolean isLeft = true;
-    	boolean preOperator = false;
-    	
     	String operator = "";
     	
     	String operator2 = "";
     	
-    	int result = 0;
+    	BigInteger result = new BigInteger("0");
     	
     	char input[] = s.toCharArray();
     	
@@ -147,16 +148,8 @@ public class Solution {
         		continue;
         	}else{
         		if(operator == ""){
-        			
-        			if(i == 0 ){
-        				
-        				preOperator = true;
-        				
-        			}else{
-        				operator = now+"";
-                		isLeft = false;
-        			}
-        			
+        			operator = now+"";
+            		isLeft = false;
         		}else{
         			operator2 = now + "";
         		}
@@ -168,29 +161,23 @@ public class Solution {
     		left = "0";
     	}
     	
-    	int pre = 1;
-    	if(preOperator){
-    		pre = -1;
-    	}
-    	
     	switch (operator) {
 		case "+":
 			if(operator2 == ""){
-				result = Integer.parseInt(left)*pre + Integer.parseInt(right);
-				
+				result = new BigInteger(left).add(new BigInteger(right));
 			}else if (operator2 == "-"){
 				// + -1
-				result = Integer.parseInt(left)*pre - Integer.parseInt(right); 
+				result = new BigInteger(left).subtract(new BigInteger(right)); 
 			}
 			
 			break;
 			
 		case "-":
 			if(operator2 == ""){
-				result = Integer.parseInt(left)*pre - Integer.parseInt(right); 
+				result = new BigInteger(left).subtract(new BigInteger(right)); 
 			}else{
 				//- -1
-				result =  Integer.parseInt(left)*pre + Integer.parseInt(right);
+				result =  new BigInteger(left).add(new BigInteger(right));
 			}
 			break;
 					
@@ -207,7 +194,7 @@ public class Solution {
     }
     
     public static void main(String[] args) {
-    	System.out.println(new Solution().calculate("2-(5-6)"));
+    	System.out.println(new Solution2().calculate("(1+(4+5+2)-3)+(6+8)"));
 		
 	}
 }
