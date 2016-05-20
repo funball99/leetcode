@@ -1,5 +1,6 @@
 package commonTest;
 
+import java.util.Stack;
 
 public class Test {
 	public static void main(String[] args) {
@@ -10,6 +11,8 @@ public class Test {
 //		}
 		
 		
-		System.out.println('1' - '0');
+//		System.out.println('1' - '0');
+		
+		
 	}
 }
