@@ -1,4 +1,4 @@
-package problem1;
+package problems1;
 
 /**
  * 

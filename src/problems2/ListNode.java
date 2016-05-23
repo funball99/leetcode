@@ -1,4 +1,4 @@
-package problem2;
+package problems2;
 
 
 public class ListNode {
