@@ -13,10 +13,14 @@ public class Test {
 		
 //		System.out.println('1' - '0');
 		
+//		
+//		Long a = 160125153848219L;
+//		
+//		
+//		System.out.println(a.toString().length());
 		
-		Long a = 160125153848219L;
+		int a = 1;
 		
-		
-		System.out.println(a.toString().length());
+		System.out.println();
 	}
 }
