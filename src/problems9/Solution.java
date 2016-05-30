@@ -14,19 +14,28 @@ Determine whether an integer is a palindrome. Do this without extra space.
 
 public class Solution {
 	public boolean isPalindrome(int x) {
-		if(x < 0 ){
+		String ori = x+"";
+		if(x < 0){
+			return false;
+		}else if(x == 0){
+			return true;
+		}
+		
+		String y = "";
+		while(x != 0){
+			y += (x % 10) + "";
+			x = x / 10;
+		}
+		
+		if(y.equals(ori)){
+			return true;
+		}else{
 			return false;
 		}
 		
-		x = x >> 1;
-		if(x >= 0 && x <= 9){
-			return true;
-		}else{
-			return isPalindrome(x);
-		}
     }
 	
 	public static void main(String[] args) {
-		System.out.println(3&1);
+		System.out.println(new Solution().isPalindrome(11));
 	}
 }
