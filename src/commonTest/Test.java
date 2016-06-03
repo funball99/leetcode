@@ -19,8 +19,9 @@ public class Test {
 //		
 //		System.out.println(a.toString().length());
 		
-		int a = 1;
 		
-		System.out.println();
+		
+		String a = "12345678";
+		System.out.println(a.substring(0,4) + "**" + a.substring(a.length() - 4 , a.length()));
 	}
 }

@@ -1,5 +1,6 @@
 package problems10;
 
+import java.util.Arrays;
 
 /**
  * 
@@ -35,18 +36,54 @@ public class Solution {
 	
 	/*
 	 * 基本思路：
-	 * 来硬的咯
+	 * 估计要递归了，不递归没法做了
 	 */
 	public boolean isMatch(String s, String p) {
 		
-		char[] pattern = p.toCharArray();
+		char[] pattern_array = p.toCharArray();
 		
-		char[] input = s.toCharArray();
+		char[] input_array = s.toCharArray();
 		
-		for(int i = pattern.length - 1 ; i >= 0 ; i --){
-			char c_pattern = pattern[i];
+		
+		int input_index = 0;
+		
+		int patter_array_length = pattern_array.length;
+		
+		for(int i = 0 ; i < patter_array_length; i ++){
 			
+			char pattern = pattern_array[i];
 			
+			if(pattern == '*'){
+				
+				char last_pattern = pattern_array[i-1];
+				char last_input = input_array[input_index - 1];
+				
+				if(last_pattern == '.'){
+					//.* 情况
+					
+					
+				}else{
+					//a*情况
+//					if(last_input)
+					
+				}
+				
+				
+			}else if(pattern == '.'){
+				//a.b情况
+				input_index++;
+				continue;
+				
+			}else{
+				//adsagwar情况
+				if(pattern == input_array[input_index]){
+					input_index ++ ;
+					continue;
+				}else{
+					return false;
+				}
+				
+			}
 			
 		}
 		
