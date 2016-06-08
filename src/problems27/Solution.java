@@ -41,7 +41,7 @@ public class Solution {
 		}
 		
 		
-		nums = Arrays.copyOf(nums, length);
+//		nums = Arrays.copyOf(nums, length);
 		return nums.length;
     }
 }
